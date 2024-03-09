@@ -16,7 +16,7 @@ namespace WinForms
 
             if (int.TryParse(input, out length))
             {
-                if (length > 0 && length <= MazeConstants.MAX_LENGTH)
+                if (length >= MazeConstants.MIN_LENGTH && length <= MazeConstants.MAX_LENGTH)
                 {
                     DrawMaze(length);
                     RandomMazeButton.Enabled = true;
@@ -25,7 +25,7 @@ namespace WinForms
                 else
                 {
                     ToolTip tp = new ToolTip();
-                    tp.Show($"Мінімальне число = 1, максимальне число = {MazeConstants.MAX_LENGTH}", MazeLengthTextBox, 2500);
+                    tp.Show($"Мінімальне число = {MazeConstants.MIN_LENGTH}, максимальне число = {MazeConstants.MAX_LENGTH}", MazeLengthTextBox, 2500);
                     
                     MazeLengthTextBox.Text = "";
                 }
@@ -106,7 +106,7 @@ namespace WinForms
         private void FindButton_Click(object sender, EventArgs e)
         {
             int length = input_maze_point_matrix.Count;
-            bool hasStart = false, hasEnd = false;
+            bool hasStart = false, hasEnd = false, hasOnlyOneStartAndEnd = true;
 
             for (int i = 0; i < length; i++)
             {
@@ -114,10 +114,17 @@ namespace WinForms
                 {
                     if (input_maze_point_matrix[i][j].State == MazePointStatesEnum.START)
                     {
+                        if (hasStart) {
+                            hasOnlyOneStartAndEnd = false;
+                        }
                         hasStart = true;
                     }
                     else if (input_maze_point_matrix[i][j].State == MazePointStatesEnum.END)
                     {
+                        if (hasEnd)
+                        {
+                            hasOnlyOneStartAndEnd = false;
+                        }
                         hasEnd = true;
                     }
                 }
@@ -126,6 +133,10 @@ namespace WinForms
             if (!hasStart || !hasEnd)
             {
                 MessageBox.Show("Лабіринт не має старту чи кінця");
+            }
+            else if (!hasOnlyOneStartAndEnd)
+            {
+                MessageBox.Show("Лабіринт має більше ніж один старт і один кінець");
             }
             else
             {

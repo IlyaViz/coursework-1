@@ -14,6 +14,7 @@ namespace WinForms
         public const int MAZE_MARGIN_LEFT = 100;
         public const int SPACE_BETWEEN_CELLS = 50;
 
+        public const int MIN_LENGTH = 2;
         public const int MAX_LENGTH = 50;
     }
 }
