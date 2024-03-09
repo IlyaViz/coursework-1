@@ -41,32 +41,26 @@ namespace WinForms
 
         private void MazePoint_OnClick(object sender, EventArgs e)
         {
-            ChangeToNextState();
-        }
-
-        private void ChangeToNextState()
-        {
-            switch (state)
+            switch (State)
             {
                 case MazePointStatesEnum.PATH:
-                    state = MazePointStatesEnum.WALL; 
+                    State = MazePointStatesEnum.WALL;
                     break;
                 case MazePointStatesEnum.WALL:
-                    state = MazePointStatesEnum.START;
+                    State = MazePointStatesEnum.START;
                     break;
                 case MazePointStatesEnum.START:
-                    state = MazePointStatesEnum.END;
+                    State = MazePointStatesEnum.END;
                     break;
                 case MazePointStatesEnum.END:
-                    state = MazePointStatesEnum.PATH;
+                    State = MazePointStatesEnum.PATH;
                     break;
             }
-            ChangeColor();
         }
 
         private void ChangeColor()
         {
-            BackColor = color_dict[state];
+            BackColor = color_dict[State];
         }
 
     }
