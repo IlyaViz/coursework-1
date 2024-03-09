@@ -44,7 +44,7 @@ namespace WinForms
         private void DrawMaze(int length)
         {
             int prevLength = input_maze_point_matrix.Count;
-            Point TopElementLocation = FindButton.Location;
+            Point topElementLocation = FindButton.Location;
 
             for (int i = 0; i < prevLength; i++)
             {
@@ -59,14 +59,11 @@ namespace WinForms
             for (int i = 0; i < length; i++)
             {
                 input_maze_point_matrix.Add(new List<MazePoint>());
-            }
 
-            for (int i = 0; i < length; i++)
-            {
                 for (int j = 0; j < length; j++)
                 {
                     MazePoint mazePoint = new MazePoint();
-                    mazePoint.Location = new Point(MazeConstants.MAZE_MARGIN_LEFT + j * MazeConstants.SPACE_BETWEEN_CELLS, TopElementLocation.Y + MazeConstants.MAZE_MARGIN_TOP + i * MazeConstants.SPACE_BETWEEN_CELLS);
+                    mazePoint.Location = new Point(MazeConstants.MAZE_MARGIN_LEFT + j * MazeConstants.SPACE_BETWEEN_CELLS, topElementLocation.Y + MazeConstants.MAZE_MARGIN_TOP + i * MazeConstants.SPACE_BETWEEN_CELLS);
 
                     input_maze_point_matrix[i].Add(mazePoint);
                     Controls.Add(mazePoint);
@@ -133,9 +130,8 @@ namespace WinForms
             else
             {
                 MethodsEnum method;
-                object selectedItem = MethodListBox.SelectedItem;
 
-                if (selectedItem != null)
+                if (MethodListBox.SelectedItem != null)
                 {
                     string text = MethodListBox.GetItemText(MethodListBox.SelectedItem);
 
