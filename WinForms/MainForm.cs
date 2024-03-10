@@ -148,7 +148,7 @@ namespace WinForms
 
                     if (text == "Метод Дейкстри")
                     {
-                        method = MethodsEnum.Dijkstras;
+                        method = MethodsEnum.Dijkstra;
                     }
                     else
                     {

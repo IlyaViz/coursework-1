@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WinForms
+﻿namespace WinForms
 {
     public enum MazePointStatesEnum
     {
@@ -12,5 +6,6 @@ namespace WinForms
         PATH = 1,
         START = 2,
         END = 3,
+        FOUND_PATH = 4,
     }
 }

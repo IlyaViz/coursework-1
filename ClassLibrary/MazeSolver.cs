@@ -1,15 +1,10 @@
 ﻿namespace ClassLibrary
 {
-    public class MazeSolver
+    public static class MazeSolver
     {
-        public void DijkstrasAlgorithm()
+        public static List<MazeVertex> FindPath(SearchAlgorithm algorithm, MazeVertex start, MazeVertex end)
         {
-
-        }
-
-        public void AStarAlgorithm()
-        {
-
+            return algorithm.Search(start, end);
         }
     }
 }

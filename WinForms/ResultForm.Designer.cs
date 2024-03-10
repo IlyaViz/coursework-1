@@ -50,6 +50,7 @@
             Controls.Add(ReturnButton);
             Name = "ResultForm";
             Text = "ResultForm";
+            Load += ResultForm_Load;
             ResumeLayout(false);
         }
 

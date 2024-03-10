@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WinForms
+﻿namespace WinForms
 {
     public partial class MazePoint : Button
     {
@@ -17,8 +7,9 @@ namespace WinForms
         {
             {MazePointStatesEnum.PATH, Color.White},
             {MazePointStatesEnum.WALL, Color.Black},
-            {MazePointStatesEnum.START, Color.Green},
-            {MazePointStatesEnum.END, Color.Red}
+            {MazePointStatesEnum.START, Color.Purple},
+            {MazePointStatesEnum.END, Color.Red},
+            {MazePointStatesEnum.FOUND_PATH, Color.Green},
         };
 
         public MazePointStatesEnum State { 
