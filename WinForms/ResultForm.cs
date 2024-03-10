@@ -33,13 +33,15 @@ namespace WinForms
         {
             try
             {
-                DrawMaze(input_maze_point_matrix, method);
+                output_maze_point_matrix = GetOutputMazePointMatrix(input_maze_point_matrix, method);
             }
             catch (PathNotFoundException)
             {
                 MessageBox.Show("Шляху не існує, повернення...");
                 Close();
             }
+
+            DrawMaze(output_maze_point_matrix);
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -54,17 +56,20 @@ namespace WinForms
             Close();
         }
 
-        public void DrawMaze(List<List<MazePoint>> inputMazePointMatrix, MethodsEnum method)
+        public List<List<MazePoint>> GetOutputMazePointMatrix(List<List<MazePoint>> inputMazePointMatrix, MethodsEnum method) 
         {
             (List<MazeVertex>, List<MazeVertex>) res = FindPath(inputMazePointMatrix, method);
             List<MazeVertex> initVertices = res.Item1;
             List<MazeVertex> resVertices = res.Item2;
+            List<List<MazePoint>> outputMazePointMatrix = new List<List<MazePoint>>();
 
             int length = inputMazePointMatrix.Count;
             Point topElementLocation = ReturnButton.Location;
 
             for (int i = 0; i < length; i++)
             {
+                outputMazePointMatrix.Add(new List<MazePoint>());
+
                 for (int j = 0; j < length; j++)
                 {
                     MazePoint mazePoint = new MazePoint();
@@ -80,7 +85,22 @@ namespace WinForms
                         mazePoint.State = inputMazePointMatrix[i][j].State;
                     }
 
-                    Controls.Add(mazePoint);
+                    outputMazePointMatrix[i].Add(mazePoint);
+                }
+            }
+
+            return outputMazePointMatrix;
+        }
+
+        public void DrawMaze(List<List<MazePoint>> outputMazePointMatrix)
+        {
+            int length = outputMazePointMatrix.Count;
+
+            for (int i = 0; i < length; i++)
+            {
+                for (int j = 0; j < length; j++)
+                {
+                    Controls.Add(outputMazePointMatrix[i][j]);
                 }
             }
         }
