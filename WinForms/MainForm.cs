@@ -18,7 +18,10 @@ namespace WinForms
             {
                 if (length >= MazeConstants.MIN_LENGTH && length <= MazeConstants.MAX_LENGTH)
                 {
+                    MazeLengthTextBox.ForeColor = Color.Black;
+
                     DrawMaze(length);
+                    
                     RandomMazeButton.Enabled = true;
                     FindButton.Enabled = true;
                 }
@@ -26,8 +29,8 @@ namespace WinForms
                 {
                     ToolTip tp = new ToolTip();
                     tp.Show($"Мінімальне число = {MazeConstants.MIN_LENGTH}, максимальне число = {MazeConstants.MAX_LENGTH}", MazeLengthTextBox, 2500);
-                    
-                    MazeLengthTextBox.Text = "";
+
+                    MazeLengthTextBox.ForeColor = Color.Red;
                 }
             }
             else if (input != "")
@@ -35,9 +38,7 @@ namespace WinForms
                 ToolTip tp = new ToolTip();
                 tp.Show("Введіть число", MazeLengthTextBox, 2500);
 
-                MazeLengthTextBox.Text = "";
-                RandomMazeButton.Enabled = false;
-                FindButton.Enabled = false;
+                MazeLengthTextBox.ForeColor = Color.Red;
             }
         }
 
