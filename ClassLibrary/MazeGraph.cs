@@ -2,11 +2,11 @@
 {
     public class MazeGraph
     {
-        public List<MazeVertex> Vertices { get; set; }
+        public List<MazeVertex> vertices;
 
         public MazeGraph(List<MazeVertex> vertices)
         {
-            Vertices = vertices;
+            this.vertices = vertices;
         }
     }
 }

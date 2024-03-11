@@ -2,11 +2,11 @@
 {
     public abstract class SearchAlgorithm
     {
-        protected const int EDGE_COST = 1; 
-        public MazeGraph Graph{ get; set; }
+        protected const int EDGE_COST = 1;
+        public MazeGraph graph;
 
         public SearchAlgorithm(MazeGraph graph) { 
-            Graph = graph;
+            this.graph = graph;
         }
 
         public abstract List<MazeVertex> Search(MazeVertex start, MazeVertex end);

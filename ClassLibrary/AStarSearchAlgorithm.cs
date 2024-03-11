@@ -11,37 +11,37 @@
             Dictionary<MazeVertex, MazeVertex> parentMap = new Dictionary<MazeVertex, MazeVertex>();
             PriorityQueue<MazeVertex, int> priorityQueue = new PriorityQueue<MazeVertex, int>();
 
-            foreach (MazeVertex vertex in Graph.Vertices)
+            foreach (MazeVertex vertex in graph.vertices)
             {
-                vertex.Cost = int.MaxValue;
-                vertex.IsVisited = false;
+                vertex.cost = int.MaxValue;
+                vertex.isVisited = false;
             }
-            start.Cost = 0;
+            start.cost = 0;
 
-            priorityQueue.Enqueue(start, start.Cost);
+            priorityQueue.Enqueue(start, start.cost);
 
             MazeVertex current;
             while (priorityQueue.Count > 0)
             {
                 current = priorityQueue.Dequeue();
 
-                if (!current.IsVisited)
+                if (!current.isVisited)
                 {
-                    current.IsVisited = true;
+                    current.isVisited = true;
 
                     if (current.Equals(end))
                     {
                         break;
                     }
 
-                    foreach (MazeVertex neighbour in current.Neighbours)
+                    foreach (MazeVertex neighbour in current.neighbours)
                     {
-                        int neighbourCost = neighbour.Cost;
-                        int newCost = current.Cost + EDGE_COST;
+                        int neighbourCost = neighbour.cost;
+                        int newCost = current.cost + EDGE_COST;
 
                         if (newCost < neighbourCost)
                         {
-                            neighbour.Cost = newCost;
+                            neighbour.cost = newCost;
                             parentMap.Add(neighbour, current);
                             priorityQueue.Enqueue(neighbour, newCost + Heuristic(neighbour, end));
                         }
@@ -54,7 +54,7 @@
 
         private int Heuristic(MazeVertex first, MazeVertex second)
         {
-            return Math.Abs(first.X - second.X) + Math.Abs(first.Y - second.Y);
+            return Math.Abs(first.x - second.x) + Math.Abs(first.y - second.y);
         }
 
         private List<MazeVertex> ReconstructPath(Dictionary<MazeVertex, MazeVertex> parentMap, MazeVertex start, MazeVertex end)

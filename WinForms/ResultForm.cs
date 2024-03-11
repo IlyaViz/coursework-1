@@ -138,8 +138,8 @@ namespace WinForms
                 for (int j = 0; j < length; j++)
                 {
                     temp = new MazeVertex();
-                    temp.X = j;
-                    temp.Y = i;
+                    temp.x = j;
+                    temp.y = i;
                     vertices.Add(temp);
                 }
             }
