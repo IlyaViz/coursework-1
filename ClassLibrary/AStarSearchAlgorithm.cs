@@ -42,7 +42,7 @@
                         if (newCost < neighbourCost)
                         {
                             neighbour.cost = newCost;
-                            parentMap.Add(neighbour, current);
+                            parentMap[neighbour] = current;
                             priorityQueue.Enqueue(neighbour, newCost + Heuristic(neighbour, end));
                         }
                     }
