@@ -34,14 +34,13 @@ namespace WinForms
             try
             {
                 output_maze_point_matrix = GetOutputMazePointMatrix(input_maze_point_matrix, method);
+                DrawMaze(output_maze_point_matrix);
             }
             catch (PathNotFoundException)
             {
                 MessageBox.Show("Шляху не існує, повернення...");
                 Close();
             }
-
-            DrawMaze(output_maze_point_matrix);
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -78,7 +77,13 @@ namespace WinForms
 
                     if (resVertices.Contains(initVertices[i * length + j]))
                     {
-                        mazePoint.State = MazePointStatesEnum.FOUND_PATH;
+                        if (inputMazePointMatrix[i][j].State == MazePointStatesEnum.START || inputMazePointMatrix[i][j].State == MazePointStatesEnum.END)
+                        {
+                            mazePoint.State = inputMazePointMatrix[i][j].State;
+                        } else
+                        {
+                            mazePoint.State = MazePointStatesEnum.FOUND_PATH;
+                        }
                     }
                     else
                     {
