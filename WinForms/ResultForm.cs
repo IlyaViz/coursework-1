@@ -57,9 +57,10 @@ namespace WinForms
 
         public List<List<MazePoint>> GetOutputMazePointMatrix(List<List<MazePoint>> inputMazePointMatrix, MethodsEnum method) 
         {
-            (List<MazeVertex>, List<MazeVertex>) res = FindPath(inputMazePointMatrix, method);
-            List<MazeVertex> initVertices = res.Item1;
-            List<MazeVertex> resVertices = res.Item2;
+            (List<MazeVertex>, List<MazeVertex>) verticesTuple = FindPath(inputMazePointMatrix, method);
+            List<MazeVertex> initVertices = verticesTuple.Item1;
+            List<MazeVertex> resVertices = verticesTuple.Item2;
+
             List<List<MazePoint>> outputMazePointMatrix = new List<List<MazePoint>>();
 
             int length = inputMazePointMatrix.Count;
@@ -112,10 +113,12 @@ namespace WinForms
 
         private (List<MazeVertex>, List<MazeVertex>) FindPath(List<List<MazePoint>> inputMazePointMatrix, MethodsEnum method)
         {
-            (List<MazeVertex>, MazeVertex, MazeVertex) res = GetVerticesFromMazePointMatrix(inputMazePointMatrix);
+            (List<MazeVertex>, MazeVertex, MazeVertex) verticesTuple = GetVerticesFromMazePointMatrix(inputMazePointMatrix);
+            List<MazeVertex> initVertices = verticesTuple.Item1;
+            MazeVertex start = verticesTuple.Item2;
+            MazeVertex end = verticesTuple.Item3;
 
-            List<MazeVertex> vertices = res.Item1;
-            MazeGraph graph = new MazeGraph(vertices);
+            MazeGraph graph = new MazeGraph(initVertices);
 
             SearchAlgorithm algorithm;
             if (method == MethodsEnum.Dijkstra)
@@ -127,15 +130,16 @@ namespace WinForms
                 algorithm = new AStarSearchAlgorithm(graph);
             }
 
-            return (vertices, MazeSolver.FindPath(algorithm, res.Item2, res.Item3));
+            return (initVertices, MazeSolver.FindPath(algorithm, start, end));
         }
 
         private (List<MazeVertex>, MazeVertex, MazeVertex) GetVerticesFromMazePointMatrix(List<List<MazePoint>> inputMazePointMatrix)
         {
             int length = inputMazePointMatrix.Count;
+
+            List<MazeVertex> vertices = new List<MazeVertex>();
             MazeVertex start = null;
             MazeVertex end = null;
-            List<MazeVertex> vertices = new List<MazeVertex>();
 
             MazeVertex temp;
             for (int i = 0; i < length; i++)
