@@ -55,7 +55,7 @@ namespace WinForms
             Close();
         }
 
-        public List<List<MazePoint>> GetOutputMazePointMatrix(List<List<MazePoint>> inputMazePointMatrix, MethodsEnum method)
+        private List<List<MazePoint>> GetOutputMazePointMatrix(List<List<MazePoint>> inputMazePointMatrix, MethodsEnum method)
         {
             (List<List<MazeVertex>>, List<MazeVertex>) verticesTuple = FindPath(inputMazePointMatrix, method);
             List<List<MazeVertex>> initVertexMatrix = verticesTuple.Item1;
@@ -99,7 +99,7 @@ namespace WinForms
             return outputMazePointMatrix;
         }
 
-        public void DrawMaze(List<List<MazePoint>> outputMazePointMatrix)
+        private void DrawMaze(List<List<MazePoint>> outputMazePointMatrix)
         {
             int length = outputMazePointMatrix.Count;
 
