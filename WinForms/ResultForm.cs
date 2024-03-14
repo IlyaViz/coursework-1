@@ -57,7 +57,7 @@ namespace WinForms
 
         private List<List<MazePoint>> GetOutputMazePointMatrix(List<List<MazePoint>> inputMazePointMatrix, MethodsEnum method)
         {
-            (List<List<MazeVertex>>, List<MazeVertex>) verticesTuple = FindPath(inputMazePointMatrix, method);
+            (List<List<MazeVertex>>, List<MazeVertex>) verticesTuple = FindVertexPathFromInputMazePointMatrix(inputMazePointMatrix, method);
             List<List<MazeVertex>> initVertexMatrix = verticesTuple.Item1;
             List<MazeVertex> resultVertices = verticesTuple.Item2;
 
@@ -112,7 +112,7 @@ namespace WinForms
             }
         }
 
-        private (List<List<MazeVertex>>, List<MazeVertex>) FindPath(List<List<MazePoint>> inputMazePointMatrix, MethodsEnum method)
+        private (List<List<MazeVertex>>, List<MazeVertex>) FindVertexPathFromInputMazePointMatrix(List<List<MazePoint>> inputMazePointMatrix, MethodsEnum method)
         {
             (List<List<MazeVertex>>, MazeVertex, MazeVertex) verticesTuple = GetVerticesFromMazePointMatrix(inputMazePointMatrix);
             List<List<MazeVertex>> initVertexMatrix = verticesTuple.Item1;
