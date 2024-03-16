@@ -142,12 +142,11 @@ namespace WinForms
             else
             {
                 MethodsEnum method;
+                int index = MethodListBox.SelectedIndex;
 
-                if (MethodListBox.SelectedItem != null)
+                if (index != -1)
                 {
-                    string text = MethodListBox.GetItemText(MethodListBox.SelectedItem);
-
-                    if (text == "Метод Дейкстри")
+                    if (index == 0)
                     {
                         method = MethodsEnum.Dijkstra;
                     }
