@@ -18,7 +18,7 @@ namespace WinForms
         private MainForm main_form;
         private MethodsEnum method;
         private List<List<MazePoint>> input_maze_point_matrix;
-        private List<List<MazePoint>> output_maze_point_matrix;
+        private List<List<MazePoint>> output_maze_point_matrix = new List<List<MazePoint>>();
 
         public ResultForm(MainForm mainForm, MethodsEnum selectedMethod, List<List<MazePoint>> inputMazePointMatrix)
         {
@@ -33,8 +33,8 @@ namespace WinForms
         {
             try
             {
-                output_maze_point_matrix = GetOutputMazePointMatrix(input_maze_point_matrix, method);
-                DrawMaze(output_maze_point_matrix);
+                GetOutputMazePointMatrix();
+                DrawMaze();
             }
             catch (PathNotFoundException)
             {
@@ -55,20 +55,18 @@ namespace WinForms
             Close();
         }
 
-        private List<List<MazePoint>> GetOutputMazePointMatrix(List<List<MazePoint>> inputMazePointMatrix, MethodsEnum method)
+        private void GetOutputMazePointMatrix()
         {
-            (List<List<MazeVertex>>, List<MazeVertex>) verticesTuple = FindVertexPathFromInputMazePointMatrix(inputMazePointMatrix, method);
+            (List<List<MazeVertex>>, List<MazeVertex>) verticesTuple = FindVertexPathFromInputMazePointMatrix();
             List<List<MazeVertex>> initVertexMatrix = verticesTuple.Item1;
             List<MazeVertex> resultVertices = verticesTuple.Item2;
 
-            List<List<MazePoint>> outputMazePointMatrix = new List<List<MazePoint>>();
-
-            int length = inputMazePointMatrix.Count;
+            int length = input_maze_point_matrix.Count;
             Point topElementLocation = ReturnButton.Location;
 
             for (int i = 0; i < length; i++)
             {
-                outputMazePointMatrix.Add(new List<MazePoint>());
+                output_maze_point_matrix.Add(new List<MazePoint>());
 
                 for (int j = 0; j < length; j++)
                 {
@@ -78,9 +76,9 @@ namespace WinForms
 
                     if (resultVertices.Contains(initVertexMatrix[i][j]))
                     {
-                        if (inputMazePointMatrix[i][j].State == MazePointStatesEnum.START || inputMazePointMatrix[i][j].State == MazePointStatesEnum.END)
+                        if (input_maze_point_matrix[i][j].State == MazePointStatesEnum.START || input_maze_point_matrix[i][j].State == MazePointStatesEnum.END)
                         {
-                            mazePoint.State = inputMazePointMatrix[i][j].State;
+                            mazePoint.State = input_maze_point_matrix[i][j].State;
                         }
                         else
                         {
@@ -89,108 +87,106 @@ namespace WinForms
                     }
                     else
                     {
-                        mazePoint.State = inputMazePointMatrix[i][j].State;
+                        mazePoint.State = input_maze_point_matrix[i][j].State;
                     }
 
-                    outputMazePointMatrix[i].Add(mazePoint);
+                    output_maze_point_matrix[i].Add(mazePoint);
                 }
             }
 
-            return outputMazePointMatrix;
-        }
-
-        private void DrawMaze(List<List<MazePoint>> outputMazePointMatrix)
-        {
-            int length = outputMazePointMatrix.Count;
-
-            for (int i = 0; i < length; i++)
+            (List<List<MazeVertex>>, List<MazeVertex>) FindVertexPathFromInputMazePointMatrix()
             {
-                for (int j = 0; j < length; j++)
+                (List<List<MazeVertex>>, MazeVertex, MazeVertex) verticesTuple = GetVerticesFromInputMazePointMatrix();
+                List<List<MazeVertex>> initVertexMatrix = verticesTuple.Item1;
+                MazeVertex start = verticesTuple.Item2;
+                MazeVertex end = verticesTuple.Item3;
+
+                MazeGraph graph = new MazeGraph(initVertexMatrix);
+
+                List<MazeVertex> result;
+                if (method == MethodsEnum.Dijkstra)
                 {
-                    Controls.Add(outputMazePointMatrix[i][j]);
+                    result = MazeSolver.Dijkstra(graph, start, end);
                 }
-            }
-        }
-
-        private (List<List<MazeVertex>>, List<MazeVertex>) FindVertexPathFromInputMazePointMatrix(List<List<MazePoint>> inputMazePointMatrix, MethodsEnum method)
-        {
-            (List<List<MazeVertex>>, MazeVertex, MazeVertex) verticesTuple = GetVerticesFromMazePointMatrix(inputMazePointMatrix);
-            List<List<MazeVertex>> initVertexMatrix = verticesTuple.Item1;
-            MazeVertex start = verticesTuple.Item2;
-            MazeVertex end = verticesTuple.Item3;
-
-            MazeGraph graph = new MazeGraph(initVertexMatrix);
-
-            List<MazeVertex> result;
-            if (method == MethodsEnum.Dijkstra)
-            {
-                result = MazeSolver.Dijkstra(graph, start, end);
-            }
-            else
-            {
-                result = MazeSolver.AStar(graph, start, end);
-            }
-
-            return (initVertexMatrix, result);
-        }
-
-        private (List<List<MazeVertex>>, MazeVertex, MazeVertex) GetVerticesFromMazePointMatrix(List<List<MazePoint>> inputMazePointMatrix)
-        {
-            int length = inputMazePointMatrix.Count;
-
-            List<List<MazeVertex>> vertexMatrix = new List<List<MazeVertex>>();
-            MazeVertex start = null;
-            MazeVertex end = null;
-
-            MazeVertex temp;
-            for (int i = 0; i < length; i++)
-            {
-                vertexMatrix.Add(new List<MazeVertex>());
-
-                for (int j = 0; j < length; j++)
+                else
                 {
-                    temp = new MazeVertex();
-                    temp.x = j;
-                    temp.y = i;
-                    vertexMatrix[i].Add(temp);
+                    result = MazeSolver.AStar(graph, start, end);
                 }
+
+                return (initVertexMatrix, result);
             }
 
-            for (int i = 0; i < length; i++)
+            (List<List<MazeVertex>>, MazeVertex, MazeVertex) GetVerticesFromInputMazePointMatrix()
             {
-                for (int j = 0; j < length; j++)
+                int length = input_maze_point_matrix.Count;
+
+                List<List<MazeVertex>> vertexMatrix = new List<List<MazeVertex>>();
+                MazeVertex start = null;
+                MazeVertex end = null;
+
+                MazeVertex temp;
+                for (int i = 0; i < length; i++)
                 {
-                    if (inputMazePointMatrix[i][j].State != MazePointStatesEnum.WALL)
+                    vertexMatrix.Add(new List<MazeVertex>());
+
+                    for (int j = 0; j < length; j++)
                     {
-                        if (inputMazePointMatrix[i][j].State == MazePointStatesEnum.START)
-                        {
-                            start = vertexMatrix[i][j];
-                        }
-                        else if (inputMazePointMatrix[i][j].State == MazePointStatesEnum.END)
-                        {
-                            end = vertexMatrix[i][j];
-                        }
+                        temp = new MazeVertex();
+                        temp.x = j;
+                        temp.y = i;
+                        vertexMatrix[i].Add(temp);
+                    }
+                }
 
-                        if (j - 1 >= 0 && inputMazePointMatrix[i][j - 1].State != MazePointStatesEnum.WALL)
+                for (int i = 0; i < length; i++)
+                {
+                    for (int j = 0; j < length; j++)
+                    {
+                        if (input_maze_point_matrix[i][j].State != MazePointStatesEnum.WALL)
                         {
-                            vertexMatrix[i][j].AddNeighbour(vertexMatrix[i][j - 1]);
-                        }
-                        if (j + 1 < length && inputMazePointMatrix[i][j + 1].State != MazePointStatesEnum.WALL)
-                        {
-                            vertexMatrix[i][j].AddNeighbour(vertexMatrix[i][j + 1]);
-                        }
-                        if (i - 1 >= 0 && inputMazePointMatrix[i - 1][j].State != MazePointStatesEnum.WALL)
-                        {
-                            vertexMatrix[i][j].AddNeighbour(vertexMatrix[i - 1][j]);
-                        }
-                        if (i + 1 < length && inputMazePointMatrix[i + 1][j].State != MazePointStatesEnum.WALL)
-                        {
-                            vertexMatrix[i][j].AddNeighbour(vertexMatrix[i + 1][j]);
+                            if (input_maze_point_matrix[i][j].State == MazePointStatesEnum.START)
+                            {
+                                start = vertexMatrix[i][j];
+                            }
+                            else if (input_maze_point_matrix[i][j].State == MazePointStatesEnum.END)
+                            {
+                                end = vertexMatrix[i][j];
+                            }
+
+                            if (j - 1 >= 0 && input_maze_point_matrix[i][j - 1].State != MazePointStatesEnum.WALL)
+                            {
+                                vertexMatrix[i][j].AddNeighbour(vertexMatrix[i][j - 1]);
+                            }
+                            if (j + 1 < length && input_maze_point_matrix[i][j + 1].State != MazePointStatesEnum.WALL)
+                            {
+                                vertexMatrix[i][j].AddNeighbour(vertexMatrix[i][j + 1]);
+                            }
+                            if (i - 1 >= 0 && input_maze_point_matrix[i - 1][j].State != MazePointStatesEnum.WALL)
+                            {
+                                vertexMatrix[i][j].AddNeighbour(vertexMatrix[i - 1][j]);
+                            }
+                            if (i + 1 < length && input_maze_point_matrix[i + 1][j].State != MazePointStatesEnum.WALL)
+                            {
+                                vertexMatrix[i][j].AddNeighbour(vertexMatrix[i + 1][j]);
+                            }
                         }
                     }
                 }
+                return (vertexMatrix, start, end);
             }
-            return (vertexMatrix, start, end);
+        }
+
+        private void DrawMaze()
+        {
+            int length = output_maze_point_matrix.Count;
+
+            for (int i = 0; i < length; i++)
+            {
+                for (int j = 0; j < length; j++)
+                {
+                    Controls.Add(output_maze_point_matrix[i][j]);
+                }
+            }
         }
     }
 }
