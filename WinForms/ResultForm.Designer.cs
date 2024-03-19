@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             ReturnButton = new Button();
+            SaveResultToFileButton = new Button();
             SuspendLayout();
             // 
             // ReturnButton
@@ -41,12 +42,24 @@
             ReturnButton.UseVisualStyleBackColor = true;
             ReturnButton.Click += ReturnButton_Click;
             // 
+            // SaveResultToFileButton
+            // 
+            SaveResultToFileButton.Enabled = false;
+            SaveResultToFileButton.Location = new Point(334, 12);
+            SaveResultToFileButton.Name = "SaveResultToFileButton";
+            SaveResultToFileButton.Size = new Size(140, 66);
+            SaveResultToFileButton.TabIndex = 1;
+            SaveResultToFileButton.Text = "Зберегти результат в файл";
+            SaveResultToFileButton.UseVisualStyleBackColor = true;
+            SaveResultToFileButton.Click += SaveResultToFileButton_Click;
+            // 
             // ResultForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             ClientSize = new Size(800, 450);
+            Controls.Add(SaveResultToFileButton);
             Controls.Add(ReturnButton);
             Name = "ResultForm";
             Text = "ResultForm";
@@ -57,5 +70,6 @@
         #endregion
 
         private Button ReturnButton;
+        private Button SaveResultToFileButton;
     }
 }

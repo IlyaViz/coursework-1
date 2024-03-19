@@ -34,13 +34,15 @@ namespace WinForms
             try
             {
                 GetOutputMazePointMatrix();
-                DrawMaze();
             }
             catch (PathNotFoundException)
             {
                 MessageBox.Show("Шляху не існує, повернення...");
                 Close();
             }
+
+            DrawMaze();
+            SaveResultToFileButton.Enabled = true;
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -187,6 +189,53 @@ namespace WinForms
                     Controls.Add(output_maze_point_matrix[i][j]);
                 }
             }
+        }
+
+        private void SaveResultToFileButton_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                int length = output_maze_point_matrix.Count;
+                char[,] charMatrix = new char[length, length];
+
+                for (int i = 0; i < length; i++)
+                {
+                    for (int j = 0; j < length; j++)
+                    {
+                        if (output_maze_point_matrix[i][j].State == MazePointStatesEnum.START)
+                        {
+                            charMatrix[i, j] = 's';
+                        }
+                        else if (output_maze_point_matrix[i][j].State == MazePointStatesEnum.END)
+                        {
+                            charMatrix[i, j] = 'e';
+                        }
+                        else if (output_maze_point_matrix[i][j].State == MazePointStatesEnum.FOUND_PATH)
+                        {
+                            charMatrix[i, j] = '*';
+                        }
+                        else if (output_maze_point_matrix[i][j].State == MazePointStatesEnum.PATH)
+                        {
+                            charMatrix[i, j] = '-';
+                        }
+                        else if (output_maze_point_matrix[i][j].State == MazePointStatesEnum.WALL)
+                        {
+                            charMatrix[i, j] = '#';
+                        }
+                    }
+                }
+
+                MatrixFileSaver.SaveMatrixWithAutoName(dialog.SelectedPath, charMatrix);
+            }
+            else
+            {
+                MessageBox.Show("Помилка... Спробуйте іншу папку");
+            }
+
+
         }
     }
 }
