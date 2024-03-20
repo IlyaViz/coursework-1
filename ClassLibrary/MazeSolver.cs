@@ -22,17 +22,16 @@
             while (priorityQueue.Count > 0)
             {
                 current = priorityQueue.Dequeue();
+                current.isVisited = true;
 
-                if (!current.isVisited)
+                if (current.Equals(end))
                 {
-                    current.isVisited = true;
+                    break;
+                }
 
-                    if (current.Equals(end))
-                    {
-                        break;
-                    }
-
-                    foreach (MazeVertex neighbour in current.neighbours)
+                foreach (MazeVertex neighbour in current.neighbours)
+                {
+                    if (!neighbour.isVisited)
                     {
                         int neighbourCost = neighbour.cost;
                         int newCost = current.cost + EDGE_COST;
@@ -44,6 +43,7 @@
                             priorityQueue.Enqueue(neighbour, newCost);
                         }
                     }
+
                 }
             }
 
@@ -68,17 +68,16 @@
             while (priorityQueue.Count > 0)
             {
                 current = priorityQueue.Dequeue();
+                current.isVisited = true;
 
-                if (!current.isVisited)
+                if (current.Equals(end))
                 {
-                    current.isVisited = true;
+                    break;
+                }
 
-                    if (current.Equals(end))
-                    {
-                        break;
-                    }
-
-                    foreach (MazeVertex neighbour in current.neighbours)
+                foreach (MazeVertex neighbour in current.neighbours)
+                {
+                    if (!neighbour.isVisited)
                     {
                         int neighbourCost = neighbour.cost;
                         int newCost = current.cost + EDGE_COST;
