@@ -59,7 +59,7 @@ namespace WinForms
 
         private void GetOutputMazePointMatrix()
         {
-            (List<List<MazeVertex>>, List<MazeVertex>) verticesTuple = FindVertexPathFromInputMazePointMatrix();
+            (List<List<MazeVertex>>, List<MazeVertex>) verticesTuple = FindVertexPath();
             List<List<MazeVertex>> initVertexMatrix = verticesTuple.Item1;
             List<MazeVertex> resultVertices = verticesTuple.Item2;
 
@@ -96,9 +96,9 @@ namespace WinForms
                 }
             }
 
-            (List<List<MazeVertex>>, List<MazeVertex>) FindVertexPathFromInputMazePointMatrix()
+            (List<List<MazeVertex>>, List<MazeVertex>) FindVertexPath()
             {
-                (List<List<MazeVertex>>, MazeVertex, MazeVertex) verticesTuple = GetVerticesFromInputMazePointMatrix();
+                (List<List<MazeVertex>>, MazeVertex, MazeVertex) verticesTuple = GetVertices();
                 List<List<MazeVertex>> initVertexMatrix = verticesTuple.Item1;
                 MazeVertex start = verticesTuple.Item2;
                 MazeVertex end = verticesTuple.Item3;
@@ -118,7 +118,7 @@ namespace WinForms
                 return (initVertexMatrix, result);
             }
 
-            (List<List<MazeVertex>>, MazeVertex, MazeVertex) GetVerticesFromInputMazePointMatrix()
+            (List<List<MazeVertex>>, MazeVertex, MazeVertex) GetVertices()
             {
                 int length = input_maze_point_matrix.Count;
 
