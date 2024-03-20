@@ -124,6 +124,7 @@
             Controls.Add(MazeLengthTextBox);
             Name = "MainForm";
             Text = "MainForm";
+            WindowState = FormWindowState.Maximized;
             ResumeLayout(false);
             PerformLayout();
         }

@@ -63,6 +63,7 @@
             Controls.Add(ReturnButton);
             Name = "ResultForm";
             Text = "ResultForm";
+            WindowState = FormWindowState.Maximized;
             Load += ResultForm_Load;
             ResumeLayout(false);
         }
