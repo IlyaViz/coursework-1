@@ -19,5 +19,10 @@
                 }
             }
         }
+
+        public void AddVertex(MazeVertex vertex)
+        {
+            vertices.Add(vertex);
+        }
     }
 }
