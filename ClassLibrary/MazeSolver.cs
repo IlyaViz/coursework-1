@@ -40,7 +40,7 @@
                         {
                             neighbour.cost = newCost;
                             parentMap[neighbour] = current;
-                            priorityQueue.Enqueue(neighbour, newCost);
+                            priorityQueue.Enqueue(neighbour, neighbour.cost);
                         }
                     }
 
@@ -86,7 +86,7 @@
                         {
                             neighbour.cost = newCost;
                             parentMap[neighbour] = current;
-                            priorityQueue.Enqueue(neighbour, newCost + Heuristic(neighbour, end));
+                            priorityQueue.Enqueue(neighbour, neighbour.cost + Heuristic(neighbour, end));
                         }
                     }
                 }
