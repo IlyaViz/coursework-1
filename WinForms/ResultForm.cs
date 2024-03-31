@@ -34,15 +34,14 @@ namespace WinForms
             try
             {
                 GetOutputMazePointMatrix();
+                DrawMaze();
+                SaveResultToFileButton.Enabled = true;
             }
             catch (PathNotFoundException)
             {
                 MessageBox.Show("Шляху не існує, повернення...");
                 Close();
-            }
-
-            DrawMaze();
-            SaveResultToFileButton.Enabled = true;
+            };
         }
 
         protected override void OnClosing(CancelEventArgs e)
