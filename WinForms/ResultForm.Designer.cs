@@ -30,6 +30,7 @@
         {
             ReturnButton = new Button();
             SaveResultToFileButton = new Button();
+            VisitedCounterTextBox = new TextBox();
             SuspendLayout();
             // 
             // ReturnButton
@@ -53,12 +54,23 @@
             SaveResultToFileButton.UseVisualStyleBackColor = true;
             SaveResultToFileButton.Click += SaveResultToFileButton_Click;
             // 
+            // VisitedCounterTextBox
+            // 
+            VisitedCounterTextBox.BorderStyle = BorderStyle.None;
+            VisitedCounterTextBox.Location = new Point(12, 108);
+            VisitedCounterTextBox.Name = "VisitedCounterTextBox";
+            VisitedCounterTextBox.ReadOnly = true;
+            VisitedCounterTextBox.Size = new Size(397, 20);
+            VisitedCounterTextBox.TabIndex = 2;
+            VisitedCounterTextBox.Text = "Кількість пройдених вершин під час алгоритму: ";
+            // 
             // ResultForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             ClientSize = new Size(800, 450);
+            Controls.Add(VisitedCounterTextBox);
             Controls.Add(SaveResultToFileButton);
             Controls.Add(ReturnButton);
             Name = "ResultForm";
@@ -66,11 +78,13 @@
             WindowState = FormWindowState.Maximized;
             Load += ResultForm_Load;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Button ReturnButton;
         private Button SaveResultToFileButton;
+        private TextBox VisitedCounterTextBox;
     }
 }
