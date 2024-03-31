@@ -3,6 +3,7 @@
     public enum MethodsEnum
     {
         Dijkstra,
-        AStar,
+        AStarManhattan,
+        AStarEuclidean
     }
 }

@@ -123,19 +123,21 @@ namespace WinForms
 
             MazeGraph graph = new MazeGraph(initVertexMatrix);
 
-            (List<MazeVertex>, int) algorithmResult;
+            List<MazeVertex> algorithmResult;
             if (method == MethodsEnum.Dijkstra)
             {
-                algorithmResult = MazeSolver.Dijkstra(graph, start, end);
+                algorithmResult = MazeSolver.Solve(graph, start, end, (_, _) => 0);
+            }
+            else if (method == MethodsEnum.AStarManhattan)
+            {
+                algorithmResult = MazeSolver.Solve(graph, start, end, MazeSolver.ManhattanDistance);
             }
             else
             {
-                algorithmResult = MazeSolver.AStar(graph, start, end);
+                algorithmResult = MazeSolver.Solve(graph, start, end, MazeSolver.EuclideanDistance);
             }
 
-            visited_vertex_during_algorithm = algorithmResult.Item2;
-
-            return (initVertexMatrix, algorithmResult.Item1);
+            return (initVertexMatrix, algorithmResult);
         }
 
         private (List<List<MazeVertex>>, MazeVertex, MazeVertex) GetVertices()
@@ -175,21 +177,28 @@ namespace WinForms
                             end = vertexMatrix[i][j];
                         }
 
-                        if (j - 1 >= 0 && input_maze_point_matrix[i][j - 1].State != MazePointStatesEnum.WALL)
+                        List<(int, int)> coordinates = new List<(int, int)>
                         {
-                            vertexMatrix[i][j].AddNeighbour(vertexMatrix[i][j - 1]);
-                        }
-                        if (j + 1 < length && input_maze_point_matrix[i][j + 1].State != MazePointStatesEnum.WALL)
+                            (0, 1),
+                            (0, -1),
+                            (1, 0),
+                            (-1, 0),
+                            (1, 1),
+                            (1, -1),
+                            (-1, -1),
+                            (-1, 1)
+                        };
+                        foreach ((int, int) path in coordinates)
                         {
-                            vertexMatrix[i][j].AddNeighbour(vertexMatrix[i][j + 1]);
-                        }
-                        if (i - 1 >= 0 && input_maze_point_matrix[i - 1][j].State != MazePointStatesEnum.WALL)
-                        {
-                            vertexMatrix[i][j].AddNeighbour(vertexMatrix[i - 1][j]);
-                        }
-                        if (i + 1 < length && input_maze_point_matrix[i + 1][j].State != MazePointStatesEnum.WALL)
-                        {
-                            vertexMatrix[i][j].AddNeighbour(vertexMatrix[i + 1][j]);
+                            int neighbourI = i + path.Item1;
+                            int neighbourJ = j + path.Item2;
+                            if (neighbourI >= 0 && neighbourI < length && neighbourJ >= 0 && neighbourJ < length)
+                            {
+                                if (input_maze_point_matrix[neighbourI][neighbourJ].State != MazePointStatesEnum.WALL)
+                                {
+                                    vertexMatrix[i][j].AddNeighbour(vertexMatrix[neighbourI][neighbourJ]);
+                                }
+                            }
                         }
                     }
                 }

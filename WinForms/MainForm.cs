@@ -150,9 +150,12 @@ namespace WinForms
                     {
                         method = MethodsEnum.Dijkstra;
                     }
-                    else
+                    else if (index == 1)
                     {
-                        method = MethodsEnum.AStar;
+                        method = MethodsEnum.AStarManhattan;
+                    } else
+                    {
+                        method = MethodsEnum.AStarEuclidean;
                     }
 
                     Hide();

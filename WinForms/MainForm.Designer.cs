@@ -68,10 +68,10 @@
             // MethodListBox
             // 
             MethodListBox.FormattingEnabled = true;
-            MethodListBox.Items.AddRange(new object[] { "Метод Дейкстри", "Метод A*" });
-            MethodListBox.Location = new Point(321, 183);
+            MethodListBox.Items.AddRange(new object[] { "Метод Дейкстри", "Метод A*(манхеттенська евристика)", "Метод А*(евклідова евристика)" });
+            MethodListBox.Location = new Point(265, 180);
             MethodListBox.Name = "MethodListBox";
-            MethodListBox.Size = new Size(137, 44);
+            MethodListBox.Size = new Size(260, 64);
             MethodListBox.TabIndex = 3;
             // 
             // label1
