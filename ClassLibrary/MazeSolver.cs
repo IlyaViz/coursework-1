@@ -5,8 +5,9 @@ namespace ClassLibrary
     public static class MazeSolver
     {
         public const int EDGE_COST = 1;
+        public delegate double HeuristicDistance(MazeVertex first, MazeVertex second);
 
-        public static (List<MazeVertex>, TimeSpan, int, int) Solve(MazeGraph graph, MazeVertex start, MazeVertex end, Func<MazeVertex, MazeVertex, double> heuristic)
+        public static (List<MazeVertex>, TimeSpan, int, int) Solve(MazeGraph graph, MazeVertex start, MazeVertex end, HeuristicDistance heuristic)
         {
             Dictionary<MazeVertex, MazeVertex> parentMap = new Dictionary<MazeVertex, MazeVertex>();
             PriorityQueue<MazeVertex, double> priorityQueue = new PriorityQueue<MazeVertex, double>();
@@ -90,7 +91,7 @@ namespace ClassLibrary
             return Math.Sqrt(Math.Pow(first.x - second.x, 2) + Math.Pow(first.y - second.y, 2));
         }
 
-        public static double DijsktraNoDistance(MazeVertex first, MazeVertex second)
+        public static double DijsktraDistance(MazeVertex first, MazeVertex second)
         {
             return 0;
         }

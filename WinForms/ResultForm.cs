@@ -144,7 +144,7 @@ namespace WinForms
             (List<MazeVertex>, TimeSpan, int, int) algorithmResult;
             if (method == MethodsEnum.Dijkstra)
             {
-                algorithmResult = MazeSolver.Solve(graph, start, end, MazeSolver.DijsktraNoDistance);
+                algorithmResult = MazeSolver.Solve(graph, start, end, MazeSolver.DijsktraDistance);
             }
             else if (method == MethodsEnum.AStarManhattan)
             {
@@ -158,7 +158,7 @@ namespace WinForms
             algorithm_taken_time = algorithmResult.Item2;
             visited_vertex_during_algorithm = algorithmResult.Item3;
             max_vertices_in_memory_during_algorithm = algorithmResult.Item4;
-            path_length = algorithmResult.Item1.Count;
+            path_length = algorithmResult.Item1.Count-1;
 
             return (initVertexMatrix, algorithmResult.Item1);
         }
