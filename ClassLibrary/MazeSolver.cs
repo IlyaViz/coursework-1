@@ -26,7 +26,7 @@
 
                 if (current.Equals(end))
                 {
-                    break;
+                    return ReconstructPath(parentMap, start, end);
                 }
 
                 foreach (MazeVertex neighbour in current.neighbours)
@@ -46,7 +46,7 @@
                 }
             }
 
-            return ReconstructPath(parentMap, start, end);
+            throw new PathNotFoundException();
         }
 
         private static List<MazeVertex> ReconstructPath(Dictionary<MazeVertex, MazeVertex> parentMap, MazeVertex start, MazeVertex end)
@@ -57,15 +57,7 @@
             while (current != start)
             {
                 path.Add(current);
-
-                try
-                {
-                    current = parentMap[current];
-                }
-                catch (KeyNotFoundException)
-                {
-                    throw new PathNotFoundException();
-                }
+                current = parentMap[current];
             }
 
             path.Add(start);
