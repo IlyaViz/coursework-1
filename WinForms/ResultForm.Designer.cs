@@ -31,11 +31,15 @@
             ReturnButton = new Button();
             SaveResultToFileButton = new Button();
             VisitedCounterTextBox = new TextBox();
+            TakenTimeTextBox = new TextBox();
+            MaxVerticesInMemoryTextBox = new TextBox();
+            PathLengthTextBox = new TextBox();
+            MethodTextBox = new TextBox();
             SuspendLayout();
             // 
             // ReturnButton
             // 
-            ReturnButton.Location = new Point(12, 27);
+            ReturnButton.Location = new Point(12, 31);
             ReturnButton.Name = "ReturnButton";
             ReturnButton.Size = new Size(119, 29);
             ReturnButton.TabIndex = 0;
@@ -46,7 +50,7 @@
             // SaveResultToFileButton
             // 
             SaveResultToFileButton.Enabled = false;
-            SaveResultToFileButton.Location = new Point(334, 12);
+            SaveResultToFileButton.Location = new Point(175, 12);
             SaveResultToFileButton.Name = "SaveResultToFileButton";
             SaveResultToFileButton.Size = new Size(140, 66);
             SaveResultToFileButton.TabIndex = 1;
@@ -57,12 +61,53 @@
             // VisitedCounterTextBox
             // 
             VisitedCounterTextBox.BorderStyle = BorderStyle.None;
-            VisitedCounterTextBox.Location = new Point(12, 108);
+            VisitedCounterTextBox.Location = new Point(12, 218);
             VisitedCounterTextBox.Name = "VisitedCounterTextBox";
             VisitedCounterTextBox.ReadOnly = true;
             VisitedCounterTextBox.Size = new Size(397, 20);
             VisitedCounterTextBox.TabIndex = 2;
-            VisitedCounterTextBox.Text = "Кількість пройдених вершин під час алгоритму: ";
+            VisitedCounterTextBox.Text = "Кількість відвіданих вершин під час алгоритму: ";
+            // 
+            // TakenTimeTextBox
+            // 
+            TakenTimeTextBox.BorderStyle = BorderStyle.None;
+            TakenTimeTextBox.Location = new Point(12, 166);
+            TakenTimeTextBox.Name = "TakenTimeTextBox";
+            TakenTimeTextBox.ReadOnly = true;
+            TakenTimeTextBox.Size = new Size(397, 20);
+            TakenTimeTextBox.TabIndex = 3;
+            TakenTimeTextBox.Text = "Затрачений час: ";
+            // 
+            // MaxVerticesInMemoryTextBox
+            // 
+            MaxVerticesInMemoryTextBox.BorderStyle = BorderStyle.None;
+            MaxVerticesInMemoryTextBox.Location = new Point(12, 244);
+            MaxVerticesInMemoryTextBox.Name = "MaxVerticesInMemoryTextBox";
+            MaxVerticesInMemoryTextBox.ReadOnly = true;
+            MaxVerticesInMemoryTextBox.Size = new Size(397, 20);
+            MaxVerticesInMemoryTextBox.TabIndex = 4;
+            MaxVerticesInMemoryTextBox.Text = "Максимально вершин в пам'яті: ";
+            // 
+            // PathLengthTextBox
+            // 
+            PathLengthTextBox.BorderStyle = BorderStyle.None;
+            PathLengthTextBox.Location = new Point(12, 192);
+            PathLengthTextBox.Name = "PathLengthTextBox";
+            PathLengthTextBox.ReadOnly = true;
+            PathLengthTextBox.Size = new Size(397, 20);
+            PathLengthTextBox.TabIndex = 5;
+            PathLengthTextBox.Text = "Довжина шляху: ";
+            // 
+            // MethodTextBox
+            // 
+            MethodTextBox.BackColor = SystemColors.Control;
+            MethodTextBox.BorderStyle = BorderStyle.None;
+            MethodTextBox.Font = new Font("Noto Sans Hebrew", 13.7999992F);
+            MethodTextBox.Location = new Point(12, 128);
+            MethodTextBox.Name = "MethodTextBox";
+            MethodTextBox.Size = new Size(604, 32);
+            MethodTextBox.TabIndex = 6;
+            MethodTextBox.Text = "Метод: ";
             // 
             // ResultForm
             // 
@@ -70,6 +115,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             ClientSize = new Size(800, 450);
+            Controls.Add(MethodTextBox);
+            Controls.Add(PathLengthTextBox);
+            Controls.Add(MaxVerticesInMemoryTextBox);
+            Controls.Add(TakenTimeTextBox);
             Controls.Add(VisitedCounterTextBox);
             Controls.Add(SaveResultToFileButton);
             Controls.Add(ReturnButton);
@@ -86,5 +135,9 @@
         private Button ReturnButton;
         private Button SaveResultToFileButton;
         private TextBox VisitedCounterTextBox;
+        private TextBox TakenTimeTextBox;
+        private TextBox MaxVerticesInMemoryTextBox;
+        private TextBox PathLengthTextBox;
+        private TextBox MethodTextBox;
     }
 }

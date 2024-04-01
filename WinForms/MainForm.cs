@@ -83,7 +83,7 @@ namespace WinForms
                 {
                     input_maze_point_matrix[i][j].State = MazePointStatesEnum.PATH;
 
-                    bool isWall = random.Next(0, 2) == 1;
+                    bool isWall = random.Next(0, 3) == 1;
                     if (isWall)
                     {
                         input_maze_point_matrix[i][j].State = MazePointStatesEnum.WALL;

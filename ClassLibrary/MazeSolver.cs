@@ -1,13 +1,21 @@
-﻿namespace ClassLibrary
+﻿using System.Diagnostics;
+
+namespace ClassLibrary
 {
     public static class MazeSolver
     {
         public const int EDGE_COST = 1;
 
-        public static List<MazeVertex> Solve(MazeGraph graph, MazeVertex start, MazeVertex end, Func<MazeVertex, MazeVertex, double> heuristic)
+        public static (List<MazeVertex>, TimeSpan, int, int) Solve(MazeGraph graph, MazeVertex start, MazeVertex end, Func<MazeVertex, MazeVertex, double> heuristic)
         {
             Dictionary<MazeVertex, MazeVertex> parentMap = new Dictionary<MazeVertex, MazeVertex>();
             PriorityQueue<MazeVertex, double> priorityQueue = new PriorityQueue<MazeVertex, double>();
+            
+            int visitedCounter = 0;
+            int maxPriorirtyQueueLength = 0;
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
 
             foreach (MazeVertex vertex in graph.vertices)
             {
@@ -21,12 +29,17 @@
             MazeVertex current;
             while (priorityQueue.Count > 0)
             {
+                maxPriorirtyQueueLength = priorityQueue.Count > maxPriorirtyQueueLength ? priorityQueue.Count : maxPriorirtyQueueLength;
+                
                 current = priorityQueue.Dequeue();
                 current.isVisited = true;
+                
+                visitedCounter++;
 
                 if (current.Equals(end))
                 {
-                    return ReconstructPath(parentMap, start, end);
+                    stopwatch.Stop();
+                    return (ReconstructPath(parentMap, start, end), stopwatch.Elapsed, visitedCounter, maxPriorirtyQueueLength);
                 }
 
                 foreach (MazeVertex neighbour in current.neighbours)
@@ -45,7 +58,8 @@
                     }
                 }
             }
-
+            stopwatch.Stop();
+            
             throw new PathNotFoundException();
         }
 

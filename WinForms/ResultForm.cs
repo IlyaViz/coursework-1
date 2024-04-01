@@ -19,7 +19,10 @@ namespace WinForms
         private MethodsEnum method;
         private List<List<MazePoint>> input_maze_point_matrix;
         private List<List<MazePoint>> output_maze_point_matrix = new List<List<MazePoint>>();
+        private TimeSpan algorithm_taken_time;
+        private int path_length;
         private int visited_vertex_during_algorithm;
+        private int max_vertices_in_memory_during_algorithm;
 
         public ResultForm(MainForm mainForm, MethodsEnum selectedMethod, List<List<MazePoint>> inputMazePointMatrix)
         {
@@ -44,8 +47,23 @@ namespace WinForms
             }
 
             DrawMaze();
+            if (method == MethodsEnum.Dijkstra)
+            {
+                MethodTextBox.Text = "Метод Дейкстри";
+            }
+            else if (method == MethodsEnum.AStarManhattan)
+            {
+                MethodTextBox.Text = "Метод A*(манхеттенська евристика)";
+            }
+            else if (method == MethodsEnum.AStarEuclidean)
+            {
+                MethodTextBox.Text = "Метод А*(евклідова евристика)";
+            }
             SaveResultToFileButton.Enabled = true;
+            TakenTimeTextBox.Text += $"{algorithm_taken_time.Milliseconds}.{algorithm_taken_time.Microseconds}мс";
+            PathLengthTextBox.Text += path_length;
             VisitedCounterTextBox.Text += visited_vertex_during_algorithm;
+            MaxVerticesInMemoryTextBox.Text += max_vertices_in_memory_during_algorithm;
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -67,7 +85,7 @@ namespace WinForms
             List<MazeVertex> resultVertices = verticesTuple.Item2;
 
             int length = input_maze_point_matrix.Count;
-            Point topElementLocation = VisitedCounterTextBox.Location;
+            Point topElementLocation = MaxVerticesInMemoryTextBox.Location;
 
             for (int i = 0; i < length; i++)
             {
@@ -123,7 +141,7 @@ namespace WinForms
 
             MazeGraph graph = new MazeGraph(initVertexMatrix);
 
-            List<MazeVertex> algorithmResult;
+            (List<MazeVertex>, TimeSpan, int, int) algorithmResult;
             if (method == MethodsEnum.Dijkstra)
             {
                 algorithmResult = MazeSolver.Solve(graph, start, end, MazeSolver.DijsktraNoDistance);
@@ -137,7 +155,12 @@ namespace WinForms
                 algorithmResult = MazeSolver.Solve(graph, start, end, MazeSolver.EuclideanDistance);
             }
 
-            return (initVertexMatrix, algorithmResult);
+            algorithm_taken_time = algorithmResult.Item2;
+            visited_vertex_during_algorithm = algorithmResult.Item3;
+            max_vertices_in_memory_during_algorithm = algorithmResult.Item4;
+            path_length = algorithmResult.Item1.Count;
+
+            return (initVertexMatrix, algorithmResult.Item1);
         }
 
         private (List<List<MazeVertex>>, MazeVertex, MazeVertex) GetVertices()
@@ -183,7 +206,7 @@ namespace WinForms
                             (0, -1),
                             (1, 0),
                             (-1, 0),
-                            
+
                         };
                         foreach ((int, int) path in verticalAndHorizontalCoordinates)
                         {
