@@ -7,13 +7,12 @@ namespace ClassLibrary
         public const int EDGE_COST = 1;
         public delegate double HeuristicDistance(MazeVertex first, MazeVertex second);
 
-        public static (List<MazeVertex>, TimeSpan, int, int) Solve(MazeGraph graph, MazeVertex start, MazeVertex end, HeuristicDistance heuristic)
+        public static (List<MazeVertex>, TimeSpan, int) Solve(MazeGraph graph, MazeVertex start, MazeVertex end, HeuristicDistance heuristic)
         {
             Dictionary<MazeVertex, MazeVertex> parentMap = new Dictionary<MazeVertex, MazeVertex>();
             PriorityQueue<MazeVertex, double> priorityQueue = new PriorityQueue<MazeVertex, double>();
             
             int visitedCounter = 0;
-            int maxPriorirtyQueueLength = 0;
 
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -30,8 +29,6 @@ namespace ClassLibrary
             MazeVertex current;
             while (priorityQueue.Count > 0)
             {
-                maxPriorirtyQueueLength = priorityQueue.Count > maxPriorirtyQueueLength ? priorityQueue.Count : maxPriorirtyQueueLength;
-                
                 current = priorityQueue.Dequeue();
                 current.isVisited = true;
                 
@@ -40,7 +37,7 @@ namespace ClassLibrary
                 if (current.Equals(end))
                 {
                     stopwatch.Stop();
-                    return (ReconstructPath(parentMap, start, end), stopwatch.Elapsed, visitedCounter, maxPriorirtyQueueLength);
+                    return (ReconstructPath(parentMap, start, end), stopwatch.Elapsed, visitedCounter);
                 }
 
                 foreach (MazeVertex neighbour in current.neighbours)

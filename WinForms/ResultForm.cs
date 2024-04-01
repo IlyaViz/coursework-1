@@ -22,7 +22,6 @@ namespace WinForms
         private TimeSpan algorithm_taken_time;
         private int path_length;
         private int visited_vertex_during_algorithm;
-        private int max_vertices_in_memory_during_algorithm;
 
         public ResultForm(MainForm mainForm, MethodsEnum selectedMethod, List<List<MazePoint>> inputMazePointMatrix)
         {
@@ -63,7 +62,6 @@ namespace WinForms
             TakenTimeTextBox.Text += $"{algorithm_taken_time.Milliseconds}.{algorithm_taken_time.Microseconds}мс";
             PathLengthTextBox.Text += path_length;
             VisitedCounterTextBox.Text += visited_vertex_during_algorithm;
-            MaxVerticesInMemoryTextBox.Text += max_vertices_in_memory_during_algorithm;
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -85,7 +83,7 @@ namespace WinForms
             List<MazeVertex> resultVertices = verticesTuple.Item2;
 
             int length = input_maze_point_matrix.Count;
-            Point topElementLocation = MaxVerticesInMemoryTextBox.Location;
+            Point topElementLocation = VisitedCounterTextBox.Location;
 
             for (int i = 0; i < length; i++)
             {
@@ -141,7 +139,7 @@ namespace WinForms
 
             MazeGraph graph = new MazeGraph(initVertexMatrix);
 
-            (List<MazeVertex>, TimeSpan, int, int) algorithmResult;
+            (List<MazeVertex>, TimeSpan, int) algorithmResult;
             if (method == MethodsEnum.Dijkstra)
             {
                 algorithmResult = MazeSolver.Solve(graph, start, end, MazeSolver.DijsktraDistance);
@@ -156,9 +154,8 @@ namespace WinForms
             }
 
             algorithm_taken_time = algorithmResult.Item2;
-            visited_vertex_during_algorithm = algorithmResult.Item3;
-            max_vertices_in_memory_during_algorithm = algorithmResult.Item4;
             path_length = algorithmResult.Item1.Count-1;
+            visited_vertex_during_algorithm = algorithmResult.Item3;
 
             return (initVertexMatrix, algorithmResult.Item1);
         }

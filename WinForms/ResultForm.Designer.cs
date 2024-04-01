@@ -32,7 +32,6 @@
             SaveResultToFileButton = new Button();
             VisitedCounterTextBox = new TextBox();
             TakenTimeTextBox = new TextBox();
-            MaxVerticesInMemoryTextBox = new TextBox();
             PathLengthTextBox = new TextBox();
             MethodTextBox = new TextBox();
             SuspendLayout();
@@ -78,16 +77,6 @@
             TakenTimeTextBox.TabIndex = 3;
             TakenTimeTextBox.Text = "Затрачений час: ";
             // 
-            // MaxVerticesInMemoryTextBox
-            // 
-            MaxVerticesInMemoryTextBox.BorderStyle = BorderStyle.None;
-            MaxVerticesInMemoryTextBox.Location = new Point(12, 244);
-            MaxVerticesInMemoryTextBox.Name = "MaxVerticesInMemoryTextBox";
-            MaxVerticesInMemoryTextBox.ReadOnly = true;
-            MaxVerticesInMemoryTextBox.Size = new Size(397, 20);
-            MaxVerticesInMemoryTextBox.TabIndex = 4;
-            MaxVerticesInMemoryTextBox.Text = "Максимально вершин в пам'яті: ";
-            // 
             // PathLengthTextBox
             // 
             PathLengthTextBox.BorderStyle = BorderStyle.None;
@@ -117,7 +106,6 @@
             ClientSize = new Size(800, 450);
             Controls.Add(MethodTextBox);
             Controls.Add(PathLengthTextBox);
-            Controls.Add(MaxVerticesInMemoryTextBox);
             Controls.Add(TakenTimeTextBox);
             Controls.Add(VisitedCounterTextBox);
             Controls.Add(SaveResultToFileButton);
@@ -136,7 +124,6 @@
         private Button SaveResultToFileButton;
         private TextBox VisitedCounterTextBox;
         private TextBox TakenTimeTextBox;
-        private TextBox MaxVerticesInMemoryTextBox;
         private TextBox PathLengthTextBox;
         private TextBox MethodTextBox;
     }
