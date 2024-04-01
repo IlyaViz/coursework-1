@@ -126,7 +126,7 @@ namespace WinForms
             List<MazeVertex> algorithmResult;
             if (method == MethodsEnum.Dijkstra)
             {
-                algorithmResult = MazeSolver.Solve(graph, start, end, (_, _) => 0);
+                algorithmResult = MazeSolver.Solve(graph, start, end, MazeSolver.DijsktraNoDistance);
             }
             else if (method == MethodsEnum.AStarManhattan)
             {
@@ -177,18 +177,15 @@ namespace WinForms
                             end = vertexMatrix[i][j];
                         }
 
-                        List<(int, int)> coordinates = new List<(int, int)>
+                        List<(int, int)> verticalAndHorizontalCoordinates = new List<(int, int)>
                         {
                             (0, 1),
                             (0, -1),
                             (1, 0),
                             (-1, 0),
-                            (1, 1),
-                            (1, -1),
-                            (-1, -1),
-                            (-1, 1)
+                            
                         };
-                        foreach ((int, int) path in coordinates)
+                        foreach ((int, int) path in verticalAndHorizontalCoordinates)
                         {
                             int neighbourI = i + path.Item1;
                             int neighbourJ = j + path.Item2;
@@ -197,6 +194,29 @@ namespace WinForms
                                 if (input_maze_point_matrix[neighbourI][neighbourJ].State != MazePointStatesEnum.WALL)
                                 {
                                     vertexMatrix[i][j].AddNeighbour(vertexMatrix[neighbourI][neighbourJ]);
+                                }
+                            }
+                        }
+
+                        List<(int, int)> diagonalCoordinates = new List<(int, int)>
+                        {
+                            (1, 1),
+                            (1, -1),
+                            (-1, -1),
+                            (-1, 1)
+                        };
+                        foreach ((int, int) path in diagonalCoordinates)
+                        {
+                            int neighbourI = i + path.Item1;
+                            int neighbourJ = j + path.Item2;
+                            if (neighbourI >= 0 && neighbourI < length && neighbourJ >= 0 && neighbourJ < length)
+                            {
+                                if (input_maze_point_matrix[neighbourI][neighbourJ].State != MazePointStatesEnum.WALL)
+                                {
+                                    if (input_maze_point_matrix[neighbourI][j].State != MazePointStatesEnum.WALL || input_maze_point_matrix[i][neighbourJ].State != MazePointStatesEnum.WALL)
+                                    {
+                                        vertexMatrix[i][j].AddNeighbour(vertexMatrix[neighbourI][neighbourJ]);
+                                    }
                                 }
                             }
                         }

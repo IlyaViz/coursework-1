@@ -15,7 +15,7 @@
                 vertex.isVisited = false;
             }
             start.cost = 0;
-
+            
             priorityQueue.Enqueue(start, start.cost);
  
             MazeVertex current;
@@ -82,6 +82,11 @@
         public static double EuclideanDistance(MazeVertex first, MazeVertex second)
         {
             return Math.Sqrt(Math.Pow(first.x - second.x, 2) + Math.Pow(first.y - second.y, 2));
+        }
+
+        public static double DijsktraNoDistance(MazeVertex first, MazeVertex second)
+        {
+            return 0;
         }
     }
 }
