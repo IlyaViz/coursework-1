@@ -46,6 +46,11 @@ namespace WinForms
             }
 
             DrawMaze();
+            UpdateTextBoxes();
+        }
+
+        private void UpdateTextBoxes()
+        {
             if (method == MethodsEnum.Dijkstra)
             {
                 MethodTextBox.Text = "Метод Дейкстри";
