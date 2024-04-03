@@ -19,7 +19,7 @@
                 state = value;
                 ChangeColor();
             }
-        }
+        } 
 
         public MazePoint()
         {

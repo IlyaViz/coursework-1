@@ -181,8 +181,8 @@ namespace WinForms
                 for (int j = 0; j < length; j++)
                 {
                     temp = new MazeVertex();
-                    temp.x = j;
-                    temp.y = i;
+                    temp.X = j;
+                    temp.Y = i;
                     vertexMatrix[i].Add(temp);
                 }
             }

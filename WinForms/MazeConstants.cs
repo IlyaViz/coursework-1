@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WinForms
 {
-    public class MazeConstants
+    public static class MazeConstants
     {
         public const int CELL_WIDTH = 50;
         public const int CELL_HEIGHT = 50;

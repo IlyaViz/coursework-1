@@ -2,11 +2,11 @@
 {
     public class MazeGraph
     {
-        public List<MazeVertex> vertices = new List<MazeVertex>();
+        public List<MazeVertex> Vertices { get; set; } = new List<MazeVertex>();
 
         public MazeGraph(List<MazeVertex> vertices)
         {
-            this.vertices = vertices;
+            Vertices = vertices;
         }
 
         public MazeGraph(List<List<MazeVertex>> vertices)
@@ -15,7 +15,7 @@
             {
                 foreach(MazeVertex vertex in row)
                 {
-                    this.vertices.Add(vertex);
+                    Vertices.Add(vertex);
                 }
             }
         }

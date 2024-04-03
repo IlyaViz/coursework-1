@@ -4,7 +4,7 @@ namespace ClassLibrary
 {
     public static class MazeSolver
     {
-        public const int EDGE_COST = 1;
+        private const int EDGE_COST = 1;
         public delegate double HeuristicDistance(MazeVertex first, MazeVertex second);
 
         public static (List<MazeVertex>, TimeSpan, int) Solve(MazeGraph graph, MazeVertex start, MazeVertex end, HeuristicDistance heuristic)
@@ -17,20 +17,20 @@ namespace ClassLibrary
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            foreach (MazeVertex vertex in graph.vertices)
+            foreach (MazeVertex vertex in graph.Vertices)
             {
-                vertex.cost = double.MaxValue;
-                vertex.isVisited = false;
+                vertex.Cost = double.MaxValue;
+                vertex.IsVisited = false;
             }
-            start.cost = 0;
+            start.Cost = 0;
             
-            priorityQueue.Enqueue(start, start.cost);
+            priorityQueue.Enqueue(start, start.Cost);
  
             MazeVertex current;
             while (priorityQueue.Count > 0)
             {
                 current = priorityQueue.Dequeue();
-                current.isVisited = true;
+                current.IsVisited = true;
                 
                 visitedCounter++;
 
@@ -40,18 +40,18 @@ namespace ClassLibrary
                     return (ReconstructPath(parentMap, start, end), stopwatch.Elapsed, visitedCounter);
                 }
 
-                foreach (MazeVertex neighbour in current.neighbours)
+                foreach (MazeVertex neighbour in current.Neighbours)
                 {
-                    if (!neighbour.isVisited)
+                    if (!neighbour.IsVisited)
                     {
-                        double neighbourCost = neighbour.cost;
-                        double newCost = current.cost + EDGE_COST;
+                        double neighbourCost = neighbour.Cost;
+                        double newCost = current.Cost + EDGE_COST;
 
                         if (newCost < neighbourCost)
                         {
-                            neighbour.cost = newCost;
+                            neighbour.Cost = newCost;
                             parentMap[neighbour] = current;
-                            priorityQueue.Enqueue(neighbour, neighbour.cost + heuristic(neighbour, end));
+                            priorityQueue.Enqueue(neighbour, neighbour.Cost + heuristic(neighbour, end));
                         }
                     }
                 }
@@ -80,12 +80,12 @@ namespace ClassLibrary
 
         public static double ManhattanDistance(MazeVertex first, MazeVertex second)
         {
-            return Math.Abs(first.x - second.x) + Math.Abs(first.y - second.y);
+            return Math.Abs(first.X - second.X) + Math.Abs(first.Y - second.Y);
         }
 
         public static double EuclideanDistance(MazeVertex first, MazeVertex second)
         {
-            return Math.Sqrt(Math.Pow(first.x - second.x, 2) + Math.Pow(first.y - second.y, 2));
+            return Math.Sqrt(Math.Pow(first.X - second.X, 2) + Math.Pow(first.Y - second.Y, 2));
         }
 
         public static double DijsktraDistance(MazeVertex first, MazeVertex second)
