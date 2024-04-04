@@ -2,8 +2,8 @@
 {
     public enum MethodsEnum
     {
-        Dijkstra,
-        AStarManhattan,
-        AStarEuclidean
+        DIJSKTRA,
+        A_STAR_MANHATTAN,
+        A_STAR_EUCLIDEAN
     }
 }

@@ -51,15 +51,15 @@ namespace WinForms
 
         private void UpdateTextBoxes()
         {
-            if (method == MethodsEnum.Dijkstra)
+            if (method == MethodsEnum.DIJSKTRA)
             {
                 MethodTextBox.Text = "Метод Дейкстри";
             }
-            else if (method == MethodsEnum.AStarManhattan)
+            else if (method == MethodsEnum.A_STAR_MANHATTAN)
             {
                 MethodTextBox.Text = "Метод A*(манхеттенська евристика)";
             }
-            else if (method == MethodsEnum.AStarEuclidean)
+            else if (method == MethodsEnum.A_STAR_EUCLIDEAN)
             {
                 MethodTextBox.Text = "Метод А*(евклідова евристика)";
             }
@@ -145,11 +145,11 @@ namespace WinForms
             MazeGraph graph = new MazeGraph(initVertexMatrix);
 
             (List<MazeVertex>, TimeSpan, int) algorithmResult;
-            if (method == MethodsEnum.Dijkstra)
+            if (method == MethodsEnum.DIJSKTRA)
             {
                 algorithmResult = MazeSolver.Solve(graph, start, end, MazeSolver.DijsktraDistance);
             }
-            else if (method == MethodsEnum.AStarManhattan)
+            else if (method == MethodsEnum.A_STAR_MANHATTAN)
             {
                 algorithmResult = MazeSolver.Solve(graph, start, end, MazeSolver.ManhattanDistance);
             }

@@ -148,14 +148,14 @@ namespace WinForms
                 {
                     if (index == 0)
                     {
-                        method = MethodsEnum.Dijkstra;
+                        method = MethodsEnum.DIJSKTRA;
                     }
                     else if (index == 1)
                     {
-                        method = MethodsEnum.AStarManhattan;
+                        method = MethodsEnum.A_STAR_MANHATTAN;
                     } else
                     {
-                        method = MethodsEnum.AStarEuclidean;
+                        method = MethodsEnum.A_STAR_EUCLIDEAN;
                     }
 
                     Hide();
