@@ -32,7 +32,7 @@
             MainTextBox = new TextBox();
             MazeLengthLabel = new Label();
             MethodListBox = new ListBox();
-            label1 = new Label();
+            MethodLabel = new Label();
             RandomMazeButton = new Button();
             FindButton = new Button();
             SuspendLayout();
@@ -74,14 +74,14 @@
             MethodListBox.Size = new Size(260, 64);
             MethodListBox.TabIndex = 3;
             // 
-            // label1
+            // MethodLabel
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(300, 160);
-            label1.Name = "label1";
-            label1.Size = new Size(186, 20);
-            label1.TabIndex = 4;
-            label1.Text = "Виберіть метод розв'язку";
+            MethodLabel.AutoSize = true;
+            MethodLabel.Location = new Point(300, 160);
+            MethodLabel.Name = "MethodLabel";
+            MethodLabel.Size = new Size(186, 20);
+            MethodLabel.TabIndex = 4;
+            MethodLabel.Text = "Виберіть метод розв'язку";
             // 
             // RandomMazeButton
             // 
@@ -117,7 +117,7 @@
             ClientSize = new Size(800, 450);
             Controls.Add(FindButton);
             Controls.Add(RandomMazeButton);
-            Controls.Add(label1);
+            Controls.Add(MethodLabel);
             Controls.Add(MethodListBox);
             Controls.Add(MazeLengthLabel);
             Controls.Add(MainTextBox);
@@ -135,7 +135,7 @@
         private TextBox MainTextBox;
         private Label MazeLengthLabel;
         private ListBox MethodListBox;
-        private Label label1;
+        private Label MethodLabel;
         private Button RandomMazeButton;
         private Button FindButton;
     }
