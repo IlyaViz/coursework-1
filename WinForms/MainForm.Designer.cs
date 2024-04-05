@@ -61,9 +61,9 @@
             MazeLengthLabel.AutoSize = true;
             MazeLengthLabel.Location = new Point(278, 76);
             MazeLengthLabel.Name = "MazeLengthLabel";
-            MazeLengthLabel.Size = new Size(225, 20);
+            MazeLengthLabel.Size = new Size(220, 20);
             MazeLengthLabel.TabIndex = 2;
-            MazeLengthLabel.Text = "Введіть розмірність лабиринту";
+            MazeLengthLabel.Text = "Введіть розмірність лабіринту";
             // 
             // MethodListBox
             // 
