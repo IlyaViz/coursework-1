@@ -149,7 +149,7 @@ namespace WinForms
             }
 
             algorithm_taken_time = algorithmResult.Item2;
-            path_length = algorithmResult.Item1.Count-1;
+            path_length = algorithmResult.Item1.Count - 1;
             visited_vertex_during_algorithm = algorithmResult.Item3;
 
             return (initVertexMatrix, algorithmResult.Item1);
@@ -278,14 +278,19 @@ namespace WinForms
                     }
                 }
 
-                MatrixFileSaver.SaveMatrixWithAutoName(dialog.SelectedPath, charMatrix);
+                try
+                {
+                    MatrixFileSaver.SaveMatrixWithAutoName(dialog.SelectedPath, charMatrix);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    MessageBox.Show("Помилка... Спробуйте інший диск");
+                }
             }
             else
             {
                 MessageBox.Show("Помилка... Спробуйте іншу папку");
             }
-
-
         }
     }
 }
