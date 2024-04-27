@@ -36,7 +36,7 @@ namespace WinForms
             else if (input != "")
             {
                 ToolTip tp = new ToolTip();
-                tp.Show("¬вед≥ть число", MazeLengthTextBox, 2500);
+                tp.Show("¬вед≥ть ц≥ле число", MazeLengthTextBox, 2500);
 
                 MazeLengthTextBox.ForeColor = Color.Red;
             }
@@ -137,7 +137,7 @@ namespace WinForms
             }
             else if (!hasOnlyOneStartAndEnd)
             {
-                MessageBox.Show("Ћаб≥ринт маЇ б≥льше н≥ж один старт ≥ один к≥нець");
+                MessageBox.Show("Ћаб≥ринт маЇ б≥льше н≥ж один старт чи один к≥нець");
             }
             else
             {
