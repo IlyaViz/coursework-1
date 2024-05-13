@@ -44,7 +44,7 @@ namespace ClassLibrary
                     if (!neighbour.IsVisited)
                     {
                         double neighbourCost = neighbour.Cost;
-                        double newCost = current.Cost + EdgeCost(current, neighbour);
+                        double newCost = current.Cost + GetEdgeBetweenNeighbours(current, neighbour);
 
                         if (newCost < neighbourCost)
                         {
@@ -59,7 +59,7 @@ namespace ClassLibrary
             throw new PathNotFoundException();
         }
 
-        private static double EdgeCost(MazeVertex first, MazeVertex second)
+        private static double GetEdgeBetweenNeighbours(MazeVertex first, MazeVertex second)
         {
             if (Math.Abs(first.X - second.X) + Math.Abs(first.Y - second.Y) == 1)
             {
@@ -79,7 +79,7 @@ namespace ClassLibrary
             {
                 path.Add(current);
                 next = parentMap[current];
-                pathLength += EdgeCost(current, next);
+                pathLength += GetEdgeBetweenNeighbours(current, next);
                 current = next;
             }
 
