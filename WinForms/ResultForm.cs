@@ -10,7 +10,7 @@ namespace WinForms
         private List<List<MazePoint>> input_maze_point_matrix;
         private List<List<MazePoint>> output_maze_point_matrix = new List<List<MazePoint>>();
         private TimeSpan algorithm_taken_time;
-        private int path_length;
+        private double path_length;
         private int visited_vertex_during_algorithm;
 
         public ResultForm(MainForm mainForm, MethodsEnum selectedMethod, List<List<MazePoint>> inputMazePointMatrix)
@@ -55,7 +55,7 @@ namespace WinForms
             }
             SaveResultToFileButton.Enabled = true;
             TakenTimeTextBox.Text += $"{algorithm_taken_time.Milliseconds}.{algorithm_taken_time.Microseconds}мс";
-            PathLengthTextBox.Text += path_length;
+            PathLengthTextBox.Text += Math.Round(path_length, 2);
             VisitedCounterTextBox.Text += visited_vertex_during_algorithm;
         }
 
@@ -134,7 +134,7 @@ namespace WinForms
 
             MazeGraph graph = new MazeGraph(initVertexMatrix);
 
-            (List<MazeVertex>, TimeSpan, int) algorithmResult;
+            (List<MazeVertex>, double, TimeSpan, int) algorithmResult;
             if (method == MethodsEnum.DIJSKTRA)
             {
                 algorithmResult = MazeSolver.Solve(graph, start, end, MazeSolver.DijsktraDistance);
@@ -148,9 +148,9 @@ namespace WinForms
                 algorithmResult = MazeSolver.Solve(graph, start, end, MazeSolver.EuclideanDistance);
             }
 
-            algorithm_taken_time = algorithmResult.Item2;
-            path_length = algorithmResult.Item1.Count - 1;
-            visited_vertex_during_algorithm = algorithmResult.Item3;
+            path_length = algorithmResult.Item2;
+            algorithm_taken_time = algorithmResult.Item3;
+            visited_vertex_during_algorithm = algorithmResult.Item4;
 
             return (initVertexMatrix, algorithmResult.Item1);
         }

@@ -4,19 +4,17 @@ namespace ClassLibrary
 {
     public static class MazeSolver
     {
-        private const int EDGE_COST = 1;
         public delegate double HeuristicDistance(MazeVertex first, MazeVertex second);
 
-        public static (List<MazeVertex>, TimeSpan, int) Solve(MazeGraph graph, MazeVertex start, MazeVertex end, HeuristicDistance heuristic)
+        public static (List<MazeVertex>, double, TimeSpan, int) Solve(MazeGraph graph, MazeVertex start, MazeVertex end, HeuristicDistance heuristic)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            int visitedCounter = 0;
+            stopwatch.Start();
+
             Dictionary<MazeVertex, MazeVertex> parentMap = new Dictionary<MazeVertex, MazeVertex>();
             PriorityQueue<MazeVertex, double> priorityQueue = new PriorityQueue<MazeVertex, double>();
             
-            int visitedCounter = 0;
-
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-
             foreach (MazeVertex vertex in graph.Vertices)
             {
                 vertex.Cost = double.MaxValue;
@@ -36,8 +34,9 @@ namespace ClassLibrary
 
                 if (current.Equals(end))
                 {
+                    (List<MazeVertex>, double) pathInfo = ReconstructPath(parentMap, start, end);
                     stopwatch.Stop();
-                    return (ReconstructPath(parentMap, start, end), stopwatch.Elapsed, visitedCounter);
+                    return (pathInfo.Item1, pathInfo.Item2, stopwatch.Elapsed, visitedCounter);
                 }
 
                 foreach (MazeVertex neighbour in current.Neighbours)
@@ -45,7 +44,7 @@ namespace ClassLibrary
                     if (!neighbour.IsVisited)
                     {
                         double neighbourCost = neighbour.Cost;
-                        double newCost = current.Cost + EDGE_COST;
+                        double newCost = current.Cost + EdgeCost(current, neighbour);
 
                         if (newCost < neighbourCost)
                         {
@@ -60,21 +59,34 @@ namespace ClassLibrary
             throw new PathNotFoundException();
         }
 
-        private static List<MazeVertex> ReconstructPath(Dictionary<MazeVertex, MazeVertex> parentMap, MazeVertex start, MazeVertex end)
+        private static double EdgeCost(MazeVertex first, MazeVertex second)
         {
+            if (Math.Abs(first.X - second.X) + Math.Abs(first.Y - second.Y) == 1)
+            {
+                return 1;
+            }
+            return Math.Sqrt(2);
+        }
+
+        private static (List<MazeVertex>, double) ReconstructPath(Dictionary<MazeVertex, MazeVertex> parentMap, MazeVertex start, MazeVertex end)
+        {
+            double pathLength = 0;
             List<MazeVertex> path = new List<MazeVertex>();
             MazeVertex current = end;
+            MazeVertex next;
 
             while (current != start)
             {
                 path.Add(current);
-                current = parentMap[current];
+                next = parentMap[current];
+                pathLength += EdgeCost(current, next);
+                current = next;
             }
 
             path.Add(start);
 
             path.Reverse();
-            return path;
+            return (path, pathLength);
         }
 
         public static double ManhattanDistance(MazeVertex first, MazeVertex second)
