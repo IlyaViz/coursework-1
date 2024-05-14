@@ -28,8 +28,13 @@ namespace ClassLibrary
             while (priorityQueue.Count > 0)
             {
                 current = priorityQueue.Dequeue();
+
+                if (current.IsVisited)
+                {
+                    continue;
+                }
+
                 current.IsVisited = true;
-                
                 visitedCounter++;
 
                 if (current.Equals(end))
