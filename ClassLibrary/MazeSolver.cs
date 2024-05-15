@@ -49,7 +49,7 @@ namespace ClassLibrary
                     if (!neighbour.IsVisited)
                     {
                         double neighbourCost = neighbour.Cost;
-                        double newCost = current.Cost + GetEdgeBetweenNeighbours(current, neighbour);
+                        double newCost = current.Cost + current.GetDistanceToNeighbour(neighbour);
 
                         if (newCost < neighbourCost)
                         {
@@ -64,15 +64,6 @@ namespace ClassLibrary
             throw new PathNotFoundException();
         }
 
-        private static double GetEdgeBetweenNeighbours(MazeVertex first, MazeVertex second)
-        {
-            if (Math.Abs(first.X - second.X) + Math.Abs(first.Y - second.Y) == 1)
-            {
-                return 1;
-            }
-            return Math.Sqrt(2);
-        }
-
         private static (List<MazeVertex>, double) ReconstructPath(Dictionary<MazeVertex, MazeVertex> parentMap, MazeVertex start, MazeVertex end)
         {
             double pathLength = 0;
@@ -84,7 +75,7 @@ namespace ClassLibrary
             {
                 path.Add(current);
                 next = parentMap[current];
-                pathLength += GetEdgeBetweenNeighbours(current, next);
+                pathLength += current.GetDistanceToNeighbour(next);
                 current = next;
             }
 

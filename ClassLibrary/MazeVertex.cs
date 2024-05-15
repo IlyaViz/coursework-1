@@ -1,4 +1,6 @@
-﻿namespace ClassLibrary
+﻿using System.Collections.Generic;
+
+namespace ClassLibrary
 {
     public class MazeVertex
     {
@@ -11,6 +13,15 @@
         public void AddNeighbour(MazeVertex neighbour)
         {
             Neighbours.Add(neighbour);
+        }
+
+        public double GetDistanceToNeighbour(MazeVertex neighbour)
+        {
+            if (Math.Abs(X - neighbour.X) + Math.Abs(Y - neighbour.Y) == 1)
+            {
+                return 1;
+            }
+            return Math.Sqrt(2);
         }
     }
 }
