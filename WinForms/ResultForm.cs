@@ -132,20 +132,27 @@ namespace WinForms
             MazeVertex start = verticesTuple.Item2;
             MazeVertex end = verticesTuple.Item3;
 
-            MazeGraph graph = new MazeGraph(initVertexMatrix);
+            List<MazeVertex> initVertices = new List<MazeVertex>();
+            foreach(List<MazeVertex> row in  initVertexMatrix)
+            {
+                foreach(MazeVertex vertex in row)
+                {
+                    initVertices.Add(vertex);
+                }
+            }
 
             (List<MazeVertex>, double, TimeSpan, int) algorithmResult;
             if (method == MethodsEnum.DIJSKTRA)
             {
-                algorithmResult = MazeSolver.Solve(graph, start, end, MazeSolver.DijsktraDistance);
+                algorithmResult = MazeSolver.Solve(initVertices, start, end, MazeSolver.DijsktraDistance);
             }
             else if (method == MethodsEnum.A_STAR_MANHATTAN)
             {
-                algorithmResult = MazeSolver.Solve(graph, start, end, MazeSolver.ManhattanDistance);
+                algorithmResult = MazeSolver.Solve(initVertices, start, end, MazeSolver.ManhattanDistance);
             }
             else
             {
-                algorithmResult = MazeSolver.Solve(graph, start, end, MazeSolver.EuclideanDistance);
+                algorithmResult = MazeSolver.Solve(initVertices, start, end, MazeSolver.EuclideanDistance);
             }
 
             path_length = algorithmResult.Item2;
@@ -177,6 +184,21 @@ namespace WinForms
                 }
             }
 
+            (int, int)[] verticalAndHorizontalCoordinates =
+            {
+                (0, 1),
+                (0, -1),
+                (1, 0),
+                (-1, 0),
+            };
+            (int, int)[] diagonalCoordinates =
+            {
+                (1, 1),
+                (1, -1),
+                (-1, -1),
+                (-1, 1)
+            };
+
             for (int i = 0; i < length; i++)
             {
                 for (int j = 0; j < length; j++)
@@ -192,14 +214,6 @@ namespace WinForms
                             end = vertexMatrix[i][j];
                         }
 
-                        List<(int, int)> verticalAndHorizontalCoordinates = new List<(int, int)>
-                        {
-                            (0, 1),
-                            (0, -1),
-                            (1, 0),
-                            (-1, 0),
-
-                        };
                         foreach ((int, int) path in verticalAndHorizontalCoordinates)
                         {
                             int neighbourI = i + path.Item1;
@@ -213,13 +227,6 @@ namespace WinForms
                             }
                         }
 
-                        List<(int, int)> diagonalCoordinates = new List<(int, int)>
-                        {
-                            (1, 1),
-                            (1, -1),
-                            (-1, -1),
-                            (-1, 1)
-                        };
                         foreach ((int, int) path in diagonalCoordinates)
                         {
                             int neighbourI = i + path.Item1;

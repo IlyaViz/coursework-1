@@ -6,7 +6,7 @@ namespace ClassLibrary
     {
         public delegate double HeuristicDistance(MazeVertex first, MazeVertex second);
 
-        public static (List<MazeVertex>, double, TimeSpan, int) Solve(MazeGraph graph, MazeVertex start, MazeVertex end, HeuristicDistance heuristic)
+        public static (List<MazeVertex>, double, TimeSpan, int) Solve(List<MazeVertex> vertices, MazeVertex start, MazeVertex end, HeuristicDistance heuristic)
         {
             Stopwatch stopwatch = new Stopwatch();
             int visitedCounter = 0;
@@ -15,7 +15,7 @@ namespace ClassLibrary
             Dictionary<MazeVertex, MazeVertex> parentMap = new Dictionary<MazeVertex, MazeVertex>();
             PriorityQueue<MazeVertex, double> priorityQueue = new PriorityQueue<MazeVertex, double>();
             
-            foreach (MazeVertex vertex in graph.Vertices)
+            foreach (MazeVertex vertex in vertices)
             {
                 vertex.Cost = double.MaxValue;
                 vertex.IsVisited = false;
