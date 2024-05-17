@@ -2,7 +2,7 @@
 {
     public partial class MazePoint : Button
     {
-        private MazePointStatesEnum state = MazePointStatesEnum.PATH;
+        private MazePointStatesEnum state;
         private Dictionary<MazePointStatesEnum, Color> color_dict = new Dictionary<MazePointStatesEnum, Color>()
         {
             {MazePointStatesEnum.PATH, Color.White},
@@ -19,7 +19,7 @@
                 state = value;
                 ChangeColor();
             }
-        } 
+        }
 
         public MazePoint()
         {
@@ -27,6 +27,7 @@
 
             Width = MazeConstants.CELL_WIDTH;
             Height = MazeConstants.CELL_HEIGHT;
+            State = MazePointStatesEnum.PATH;
             Click += MazePoint_OnClick;
         }
 
