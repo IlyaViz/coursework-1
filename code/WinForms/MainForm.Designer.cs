@@ -35,6 +35,7 @@
             MethodLabel = new Label();
             RandomMazeButton = new Button();
             FindButton = new Button();
+            SaveCurrentMazeButton = new Button();
             SuspendLayout();
             // 
             // MazeLengthTextBox
@@ -109,12 +110,26 @@
             FindButton.UseVisualStyleBackColor = false;
             FindButton.Click += FindButton_Click;
             // 
+            // SaveCurrentMazeButton
+            // 
+            SaveCurrentMazeButton.BackColor = SystemColors.Control;
+            SaveCurrentMazeButton.Enabled = false;
+            SaveCurrentMazeButton.ForeColor = SystemColors.InfoText;
+            SaveCurrentMazeButton.Location = new Point(563, 181);
+            SaveCurrentMazeButton.Name = "SaveCurrentMazeButton";
+            SaveCurrentMazeButton.Size = new Size(171, 63);
+            SaveCurrentMazeButton.TabIndex = 7;
+            SaveCurrentMazeButton.Text = "Зберегти поточний лабіринт";
+            SaveCurrentMazeButton.UseVisualStyleBackColor = false;
+            SaveCurrentMazeButton.Click += SaveCurrentMazeButton_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             ClientSize = new Size(800, 450);
+            Controls.Add(SaveCurrentMazeButton);
             Controls.Add(FindButton);
             Controls.Add(RandomMazeButton);
             Controls.Add(MethodLabel);
@@ -138,5 +153,6 @@
         private Label MethodLabel;
         private Button RandomMazeButton;
         private Button FindButton;
+        private Button SaveCurrentMazeButton;
     }
 }
